@@ -1,0 +1,62 @@
+---
+title: "Statistical Inference Course Project Part1"
+author: "Mohit Shukla"
+date: "Thursday, May 21, 2015"
+output: pdf_document
+---
+
+#### Overview
+In this report 1000 simulations have been done to perform 40 experiments on exponential distribution.
+The simulation resulted in almost same mean and variance as our theoretical Values.
+
+```{r ehco =TRUE}
+lambda = .2
+n = 10
+rexp(n,lambda)
+mean=1/lambda
+sd = 1/lambda
+var = sd^2
+
+# comparison of simluataion mean and theoretical mean
+matrix1 <- matrix(rexp(40000,.2),nrow=1000,ncol=40)
+
+
+```
+In the above code a simulation is performed to generate a 1000*40 matrix   
+which has 1000 simulations to generate 40 exponential distribution observations.    
+Theoretically both mean and variance have value 1/lambda.
+
+```{r echo=TRUE}
+rowmean <- apply(matrix1,1,mean)
+simulationMean <- mean(rowmean)
+rbind(mean, simulationMean)
+z1 = sqrt(40)*(rowmean-mean)/sd
+
+
+rowvar <- apply(matrix1,1,var)
+simulationVar <- mean(rowvar)
+rbind(var, simulationVar)
+z2 = (rowvar-var)*sqrt(n)/sd
+library(ggplot2)
+library(gridExtra)
+plot1 <- qplot(z1, geom="histogram")
+plot2 <- qplot(z2, geom="histogram")
+grid.arrange(plot1,plot2, nrow=1, ncol=2)
+```
+
+Mean and variance of each simulation has been taken which then averaged across the number of simulations.
+The results are almost equal to the theoretical mean and variance values. As can be seen from the result. 
+Z score of simulated mean and vairance values have been plotted as a histogram which is almost 
+a Normal Distribution.
+
+```{r}
+
+expPoints <- rexp(1000,.2)
+plot11 <- qplot(expPoints, geom="histogram")
+plot21 <- qplot(rowmean, geom="histogram")
+grid.arrange(plot11,plot21,nrow=1,ncol=2)
+
+
+```
+In the above picture its evident that exponantial points are highly skewed but once converted to 
+z secore they are almost normally distributed around the mean value that is `r mean(rowmean)` or `r mean`

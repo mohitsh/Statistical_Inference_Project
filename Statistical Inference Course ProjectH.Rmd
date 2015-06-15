@@ -1,0 +1,28 @@
+---
+title: "Statistical Inference Course Project"
+author: "Mohit"
+date: "Thursday, May 21, 2015"
+output: html_document
+---
+
+#### Overview
+In this report 1000 simulations have been done to perform 40 experiments on exponantial distribution.
+The simulation resuled in almost same mean and variance as our theoretical Value.
+
+```{r}
+lambda = .2
+n = 10
+rexp(n,lambda)
+mean=1/lambda
+sd = 1/lambda
+var = sd^2
+
+# comparison of simluataion mean and theoretical mean
+matrix1 <- matrix(rexp(40000,.2),nrow=1000,ncol=40)
+
+
+```
+##### In the above code a simulation is performed to generate a 1000*40 matrix
+##### which has 1000 simulations to generate 40 exponantial distribution observations.   
+
+##### Theoretically both mean and variance have value 1/lambda.
